@@ -19,11 +19,11 @@ from utils.config import *
 
 def etth1_sweep_M(): # launched | relaunched
 
-    sweep = prod(
+    return prod(
         [
             flag("train.seed", [0]),
             flag("+experiment", ["s3-informer-etth"]),
-            flag("decoder.mode", ["last"]), # "pool" is terrible
+            flag("decoder.mode", ["last"]),  # "pool" is terrible
             flag(
                 "dataset.size",
                 [
@@ -34,25 +34,23 @@ def etth1_sweep_M(): # launched | relaunched
                     "[48,48,24]",
                 ],
             ),
-            flag("dataset.timeenc", [0]), # 1 doesn't help
+            flag("dataset.timeenc", [0]),  # 1 doesn't help
             flag("dataset.variant", [0]),
             flag("dataset.features", ["M"]),
-            flag("model.n_layers", [1]), # 2 layers don't help
-            flag("model.dropout", [0.25, 0.3]), # high dropout helps 
-            flag("optimizer.lr", [0.01, 0.004]), # adding lr sweep
+            flag("model.n_layers", [1]),  # 2 layers don't help
+            flag("model.dropout", [0.25, 0.3]),  # high dropout helps
+            flag("optimizer.lr", [0.01, 0.004]),  # adding lr sweep
             flag("task.metrics", ["[mse,mae]"]),
         ]
     )
 
-    return sweep
-
 def etth1_sweep_S(): # launched # relaunched
 
-    sweep = prod(
+    return prod(
         [
             flag("train.seed", [0]),
             flag("+experiment", ["s3-informer-etth"]),
-            flag("decoder.mode", ["last"]), # "pool" is terrible
+            flag("decoder.mode", ["last"]),  # "pool" is terrible
             flag(
                 "dataset.size",
                 [
@@ -63,17 +61,15 @@ def etth1_sweep_S(): # launched # relaunched
                     "[720,168,24]",
                 ],
             ),
-            flag("dataset.timeenc", [1]), # need to use timeenc 1
+            flag("dataset.timeenc", [1]),  # need to use timeenc 1
             flag("dataset.variant", [0]),
             flag("dataset.features", ["S"]),
-            flag("model.n_layers", [1, 2]), # still sweeping both
+            flag("model.n_layers", [1, 2]),  # still sweeping both
             flag("model.dropout", [0.25, 0.3]),
-            flag("optimizer.lr", [0.01, 0.004]), # adding lr sweep
+            flag("optimizer.lr", [0.01, 0.004]),  # adding lr sweep
             flag("task.metrics", ["[mse,mae]"]),
         ]
     )
-
-    return sweep
 
 """
 --data ETTh2 
@@ -94,11 +90,11 @@ def etth1_sweep_S(): # launched # relaunched
 
 def etth2_sweep_M(): # launched # relaunched
 
-    sweep = prod(
+    return prod(
         [
             flag("train.seed", [0]),
             flag("+experiment", ["s3-informer-etth"]),
-            flag("decoder.mode", ["last"]), # "pool" is terrible
+            flag("decoder.mode", ["last"]),  # "pool" is terrible
             flag(
                 "dataset.size",
                 [
@@ -109,25 +105,23 @@ def etth2_sweep_M(): # launched # relaunched
                     "[48,48,24]",
                 ],
             ),
-            flag("dataset.timeenc", [0]), # 1 doesn't help
+            flag("dataset.timeenc", [0]),  # 1 doesn't help
             flag("dataset.variant", [1]),
             flag("dataset.features", ["M"]),
             flag("model.n_layers", [1, 2]),
-            flag("model.dropout", [0.25, 0.3]), # high dropout helps 
-            flag("optimizer.lr", [0.01, 0.004]), # adding lr sweep
+            flag("model.dropout", [0.25, 0.3]),  # high dropout helps
+            flag("optimizer.lr", [0.01, 0.004]),  # adding lr sweep
             flag("task.metrics", ["[mse,mae]"]),
         ]
     )
 
-    return sweep
-
 def etth2_sweep_S(): # launched # relaunched
 
-    sweep = prod(
+    return prod(
         [
             flag("train.seed", [0]),
             flag("+experiment", ["s3-informer-etth"]),
-            flag("decoder.mode", ["last"]), # "pool" is terrible
+            flag("decoder.mode", ["last"]),  # "pool" is terrible
             flag(
                 "dataset.size",
                 [
@@ -138,17 +132,15 @@ def etth2_sweep_S(): # launched # relaunched
                     "[48,48,24]",
                 ],
             ),
-            flag("dataset.timeenc", [1]), # need to use timeenc 1
+            flag("dataset.timeenc", [1]),  # need to use timeenc 1
             flag("dataset.variant", [1]),
             flag("dataset.features", ["S"]),
             flag("model.n_layers", [1, 2]),
-            flag("model.dropout", [0.25, 0.3]), # high dropout helps
-            flag("optimizer.lr", [0.01, 0.004]), # adding lr sweep
+            flag("model.dropout", [0.25, 0.3]),  # high dropout helps
+            flag("optimizer.lr", [0.01, 0.004]),  # adding lr sweep
             flag("task.metrics", ["[mse,mae]"]),
         ]
     )
-
-    return sweep
 
 """
 --data ETTm1
@@ -169,11 +161,11 @@ def etth2_sweep_S(): # launched # relaunched
 
 def ettm1_sweep_M(): # launched # relaunched
 
-    sweep = prod(
+    return prod(
         [
             flag("train.seed", [0]),
             flag("+experiment", ["s3-informer-ettm"]),
-            flag("decoder.mode", ["last"]), # "pool" is terrible
+            flag("decoder.mode", ["last"]),  # "pool" is terrible
             flag(
                 "dataset.size",
                 [
@@ -185,25 +177,25 @@ def ettm1_sweep_M(): # launched # relaunched
                 ],
             ),
             flag("dataset.timeenc", [0]),
-            flag("dataset.variant", [0]), # only variant 0 is reported in the Informer paper
-            flag("dataset.features", ["M"]), 
+            flag(
+                "dataset.variant", [0]
+            ),  # only variant 0 is reported in the Informer paper
+            flag("dataset.features", ["M"]),
             flag("model.n_layers", [1, 2]),
             flag("model.dropout", [0.2, 0.25, 0.3]),
-            flag("optimizer.lr", [0.01, 0.004]), # adding lr sweep
+            flag("optimizer.lr", [0.01, 0.004]),  # adding lr sweep
             flag("trainer.val_check_interval", [0.1]),
             flag("task.metrics", ["[mse,mae]"]),
         ]
     )
 
-    return sweep
-
 def ettm1_sweep_S(): # launched # relaunched
 
-    sweep = prod(
+    return prod(
         [
             flag("train.seed", [0]),
             flag("+experiment", ["s3-informer-ettm"]),
-            flag("decoder.mode", ["last"]), # "pool" is terrible
+            flag("decoder.mode", ["last"]),  # "pool" is terrible
             flag(
                 "dataset.size",
                 [
@@ -215,17 +207,17 @@ def ettm1_sweep_S(): # launched # relaunched
                 ],
             ),
             flag("dataset.timeenc", [1]),
-            flag("dataset.variant", [0]), # only variant 0 is reported in the Informer paper
+            flag(
+                "dataset.variant", [0]
+            ),  # only variant 0 is reported in the Informer paper
             flag("dataset.features", ["S"]),
             flag("model.n_layers", [1, 2]),
             flag("model.dropout", [0.2, 0.25, 0.3]),
-            flag("optimizer.lr", [0.01, 0.004]), # adding lr sweep
+            flag("optimizer.lr", [0.01, 0.004]),  # adding lr sweep
             flag("trainer.val_check_interval", [0.1]),
             flag("task.metrics", ["[mse,mae]"]),
         ]
     )
-
-    return sweep
 
 """
 --data ECL
@@ -244,7 +236,7 @@ Informer repo doesn't report the hyperparameters for this dataset.
 
 def ecl_sweep_M(): # launched  # relaunched
 
-    sweep = prod(
+    return prod(
         [
             flag("train.seed", [0]),
             flag("+experiment", ["s3-informer-ecl"]),
@@ -261,7 +253,7 @@ def ecl_sweep_M(): # launched  # relaunched
             ),
             flag("dataset.timeenc", [0, 1]),
             flag("dataset.variant", [0]),
-            flag("dataset.features", ["M"]), 
+            flag("dataset.features", ["M"]),
             flag("model.n_layers", [1, 2]),
             flag("model.dropout", [0.2, 0.25, 0.3]),
             flag("optimizer.lr", [0.01, 0.004]),
@@ -269,11 +261,9 @@ def ecl_sweep_M(): # launched  # relaunched
         ]
     )
 
-    return sweep
-
 def ecl_sweep_S(): # launched # relaunched
 
-    sweep = prod(
+    return prod(
         [
             flag("train.seed", [0]),
             flag("+experiment", ["s3-informer-ecl"]),
@@ -290,15 +280,13 @@ def ecl_sweep_S(): # launched # relaunched
             ),
             flag("dataset.timeenc", [1]),
             flag("dataset.variant", [0]),
-            flag("dataset.features", ["S"]), 
+            flag("dataset.features", ["S"]),
             flag("model.n_layers", [1, 2]),
             flag("model.dropout", [0.2, 0.25, 0.3]),
             flag("optimizer.lr", [0.01, 0.004]),
             flag("task.metrics", ["[mse,mae]"]),
         ]
     )
-
-    return sweep
 
 
 """
@@ -320,7 +308,7 @@ def ecl_sweep_S(): # launched # relaunched
 
 def weather_sweep_M(): # launched  # relaunched
 
-    sweep = prod(
+    return prod(
         [
             flag("train.seed", [0]),
             flag("+experiment", ["s3-informer-weather"]),
@@ -345,11 +333,9 @@ def weather_sweep_M(): # launched  # relaunched
         ]
     )
 
-    return sweep
-
 def weather_sweep_S(): # launched
 
-    sweep = prod(
+    return prod(
         [
             flag("train.seed", [0]),
             flag("+experiment", ["s3-informer-weather"]),
@@ -373,6 +359,4 @@ def weather_sweep_S(): # launched
             flag("task.metrics", ["[mse,mae]"]),
         ]
     )
-
-    return sweep
 

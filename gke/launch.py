@@ -10,24 +10,25 @@ GPUS = {'v100': 'nvidia-tesla-v100',
 
 
 def startup_commands():
-    cmds = ['cd /home/workspace/projects/muscaria/',
-            # insert pip install or apt-get commands here if any
-            'pip install --upgrade git+https://github.com/tensorpack/dataflow.git',
-            'pip install tensorflow-datasets',
-            'pip install git+https://github.com/PetrochukM/PyTorch-NLP.git',
-            'pip install transformers',
-            'pip install --upgrade wandb gin-config cytoolz funcy munch cerberus pytorch-ignite',
-            'pip install --upgrade git+https://github.com/aleju/imgaug.git',
-            'apt-get -y install fish',
-            # 'apt-get -y update',
-            'apt-get -y install libxext6 libx11-6 libxrender1 libxtst6 libxi6 libxml2 libglib2.0-0 gdb',
-            'bash /home/.wandb/auth',
-            'mkdir ~/.ssh',
-            'cp /home/.ssh/noaug_id_rsa ~/.ssh/',
-            'git config --global user.email "hazymturk@gmail.com"',
-            'git config --global user.name "hazymturk"',
-            'sleep infinity']
-    return cmds
+    return [
+        'cd /home/workspace/projects/muscaria/',
+        # insert pip install or apt-get commands here if any
+        'pip install --upgrade git+https://github.com/tensorpack/dataflow.git',
+        'pip install tensorflow-datasets',
+        'pip install git+https://github.com/PetrochukM/PyTorch-NLP.git',
+        'pip install transformers',
+        'pip install --upgrade wandb gin-config cytoolz funcy munch cerberus pytorch-ignite',
+        'pip install --upgrade git+https://github.com/aleju/imgaug.git',
+        'apt-get -y install fish',
+        # 'apt-get -y update',
+        'apt-get -y install libxext6 libx11-6 libxrender1 libxtst6 libxi6 libxml2 libglib2.0-0 gdb',
+        'bash /home/.wandb/auth',
+        'mkdir ~/.ssh',
+        'cp /home/.ssh/noaug_id_rsa ~/.ssh/',
+        'git config --global user.email "hazymturk@gmail.com"',
+        'git config --global user.name "hazymturk"',
+        'sleep infinity',
+    ]
 
 
 def launch_pod(name, gpu, cpu, pool, image):

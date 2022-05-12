@@ -47,11 +47,11 @@ class Options:
             str: The main command to be run on the cluster.
         """
         all_args = ' '.join(args)
-        if dryrun:
-            cmd = f"python -m train runner=pl {all_args} wandb.group={run_name} runner.wandb=False\n"
-        else:
-            cmd = f"python -m train runner=pl runner.wandb=True wandb.group={run_name} {all_args}\n"
-        return cmd
+        return (
+            f"python -m train runner=pl {all_args} wandb.group={run_name} runner.wandb=False\n"
+            if dryrun
+            else f"python -m train runner=pl runner.wandb=True wandb.group={run_name} {all_args}\n"
+        )
 
 
 @dataclass
@@ -82,8 +82,7 @@ class UnagiGCPFineGrained(Options):
         Returns:
             str: The main command to be run on the cluster.
         """
-        cmd = f"unagi {' '.join(args)}"
-        return cmd
+        return f"unagi {' '.join(args)}"
 
 
 @dataclass
@@ -114,11 +113,11 @@ class HippoGCPHippo(Options):
         Returns:
             str: The main command to be run on the cluster.
         """
-        if dryrun:
-            cmd = f"python -m train wandb=null {' '.join(args)}"
-        else:
-            cmd = f"python -m train wandb.group={run_name} {' '.join(args)}"
-        return cmd
+        return (
+            f"python -m train wandb=null {' '.join(args)}"
+            if dryrun
+            else f"python -m train wandb.group={run_name} {' '.join(args)}"
+        )
 
 @dataclass
 class HippoGCPHippoEurope(Options):
@@ -150,11 +149,11 @@ class HippoGCPHippoEurope(Options):
         Returns:
             str: The main command to be run on the cluster.
         """
-        if dryrun:
-            cmd = f"python -m train wandb=null {' '.join(args)}"
-        else:
-            cmd = f"python -m train wandb.group={run_name} tolerance.id={int(time.time_ns())} {' '.join(args)}"
-        return cmd
+        return (
+            f"python -m train wandb=null {' '.join(args)}"
+            if dryrun
+            else f"python -m train wandb.group={run_name} tolerance.id={int(time.time_ns())} {' '.join(args)}"
+        )
 
 @dataclass
 class HippoGCPHippoCentral(HippoGCPHippoEurope):
@@ -200,11 +199,11 @@ class HippoGCPFineGrained(Options):
         Returns:
             str: The main command to be run on the cluster.
         """
-        if dryrun:
-            cmd = f"python -m train wandb=null {' '.join(args)}"
-        else:
-            cmd = f"python -m train wandb.group={run_name} {' '.join(args)}"
-        return cmd
+        return (
+            f"python -m train wandb=null {' '.join(args)}"
+            if dryrun
+            else f"python -m train wandb.group={run_name} {' '.join(args)}"
+        )
 
 
 DEFAULTS = {

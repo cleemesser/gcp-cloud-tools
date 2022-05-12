@@ -24,12 +24,10 @@ def flag(k, vs=None):
     """
     flag('seed', [0,1,2]) returns [['seed=0'], ['seed=1'], ['seed=2']]
     """
-    if vs is None:
-        return [[f"'{k}'"]]
-    return [[_escape(k, v)] for v in vs]
+    return [[f"'{k}'"]] if vs is None else [[_escape(k, v)] for v in vs]
 
 def pref(prefix, L):
-    pref_fn = lambda s: prefix+'.'+s
+    pref_fn = lambda s: f'{prefix}.{s}'
     # return map(functools.partial(map, pref_fn), prod(L))
     return [[pref_fn(s) for s in l] for l in prod(L)]
 

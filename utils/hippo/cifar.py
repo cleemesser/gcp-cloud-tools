@@ -3,7 +3,7 @@ from utils.config import *
 
 def cifar_repro():
 
-    sweep = prod(
+    return prod(
         [
             flag("train.seed", [0]),
             flag("experiment", ["s4-cifar"]),
@@ -12,12 +12,10 @@ def cifar_repro():
         ]
     )
 
-    return sweep
-
 
 def cifar_repro_2():
 
-    sweep = prod(
+    return prod(
         [
             flag("train.seed", [0]),
             flag("experiment", ["s4-cifar"]),
@@ -27,11 +25,9 @@ def cifar_repro_2():
         ]
     )
 
-    return sweep
-
 def cifar_repro_3():
 
-    sweep = prod(
+    return prod(
         [
             flag("train.seed", [0]),
             flag("experiment", ["s4-cifar"]),
@@ -41,5 +37,3 @@ def cifar_repro_3():
             flag("loader.batch_size", [32]),
         ]
     )
-
-    return sweep

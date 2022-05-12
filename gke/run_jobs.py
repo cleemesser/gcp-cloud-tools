@@ -19,41 +19,31 @@ def load_base_job_config():
 
 
 def startup_commands(method_to_run, file_to_run, config_path, use_gdb):
-    cmds = ['cd /home/workspace/projects/muscaria/',
-            # insert pip install or apt-get commands here if any
-            'pip install --upgrade git+https://github.com/tensorpack/dataflow.git',
-            'pip install tensorflow-datasets',
-            'pip install --upgrade wandb gin-config cytoolz funcy munch cerberus',
-            'pip install --upgrade git+https://github.com/aleju/imgaug.git',
-            # 'pip install -U git+https://github.com/albu/albumentations',
-            # 'apt-get -y update'
-            'apt-get -y install libxext6 libx11-6 libxrender1 libxtst6 libxi6 libxml2 libglib2.0-0 gdb',
-            'bash /home/.wandb/auth',
-            'mkdir ~/.ssh',
-            'cp /home/.ssh/id_rsa ~/.ssh/',
-            'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts',
-            # "eval `ssh-agent -s`",
-            # 'ssh-add /home/.ssh/id_rsa',
-            # 'git remote set-url origin git@github.com:hazyresearch/muscaria.git',
-            'git checkout wobbly-waterfall',
-            'git pull',
-            # 'cd augmentation'
-            ]
-
     # config_path = "augmentation/" + config_path.split("/augmentation/")[-1]
     config_path = config_path.split("/augmentation/")[-1]
 
-    if not use_gdb:
-        # run_cmd = f'python {method_to_run}.py --config {config_path}'
-        run_cmd = f'python -m augmentation.methods.{method_to_run}.{file_to_run} --config {config_path}'
-    else:
-        # run_cmd = f'gdb -ex -r -ex backtrace full --args python {method_to_run}.py --config {config_path}'
-        run_cmd = f'gdb -ex -r -ex backtrace full --args python -m augmentation.methods.{method_to_run}.{file_to_run}' \
-                  f' --config {config_path}'
+    run_cmd = (
+        f'gdb -ex -r -ex backtrace full --args python -m augmentation.methods.{method_to_run}.{file_to_run}'
+        f' --config {config_path}'
+        if use_gdb
+        else f'python -m augmentation.methods.{method_to_run}.{file_to_run} --config {config_path}'
+    )
 
-    cmds.append(run_cmd)
-
-    return cmds
+    return [
+        'cd /home/workspace/projects/muscaria/',
+        'pip install --upgrade git+https://github.com/tensorpack/dataflow.git',
+        'pip install tensorflow-datasets',
+        'pip install --upgrade wandb gin-config cytoolz funcy munch cerberus',
+        'pip install --upgrade git+https://github.com/aleju/imgaug.git',
+        'apt-get -y install libxext6 libx11-6 libxrender1 libxtst6 libxi6 libxml2 libglib2.0-0 gdb',
+        'bash /home/.wandb/auth',
+        'mkdir ~/.ssh',
+        'cp /home/.ssh/id_rsa ~/.ssh/',
+        'ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts',
+        'git checkout wobbly-waterfall',
+        'git pull',
+        run_cmd,
+    ]
 
 
 def create_job_config(job_key, job_id, method_to_run, file_to_run, config_path, store_path, use_gdb, gpu, pool):

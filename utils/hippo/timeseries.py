@@ -8,7 +8,7 @@ from utils.config import *
 
 def ett1h_longest_common_flags():
 
-    sweep = prod(
+    return prod(
         [
             flag("experiment", ["s4-informer-etth"]),
             flag(
@@ -29,11 +29,10 @@ def ett1h_longest_common_flags():
             flag("scheduler.warmup_t", [0]),
         ]
     )
-    return sweep
 
 def ett2h_longest_common_flags():
 
-    sweep = prod(
+    return prod(
         [
             flag("experiment", ["s4-informer-etth"]),
             flag(
@@ -54,11 +53,10 @@ def ett2h_longest_common_flags():
             flag("scheduler.warmup_t", [0]),
         ]
     )
-    return sweep
 
 def ettm_longest_common_flags():
     
-    sweep = prod(
+    return prod(
         [
             flag("experiment", ["s4-informer-ettm"]),
             flag(
@@ -79,12 +77,11 @@ def ettm_longest_common_flags():
             flag("scheduler.warmup_t", [0]),
         ]
     )
-    return sweep
 
 
 def ett1h_shorter_common_flags():
 
-    sweep = prod(
+    return prod(
         [
             flag("experiment", ["s4-informer-etth"]),
             flag(
@@ -108,7 +105,6 @@ def ett1h_shorter_common_flags():
             flag("scheduler.warmup_t", [0]),
         ]
     )
-    return sweep
 
 
 def etth1_global_1():
