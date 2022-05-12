@@ -15,8 +15,7 @@ PATH = Path(__file__).parent.parent.absolute() # Path to cloud-tools home
 def get_timestamp():
     """Get the current timestamp."""
     ts = datetime.datetime.now()
-    ts_str = f"{ts:%Y-%m-%d-%H-%M-%S}"[2:]
-    return ts_str
+    return f"{ts:%Y-%m-%d-%H-%M-%S}"[2:]
 
 
 
@@ -166,8 +165,9 @@ def switch_gcp_context(project, zone, cluster):
         zone (str): The GCP zone to use.
         cluster (str): The GCP cluster to use.
     """
-    failed = subprocess.call(f'kubectl config use-context {cluster}', shell=True)
-    if failed:
+    if failed := subprocess.call(
+        f'kubectl config use-context {cluster}', shell=True
+    ):
         print("Pulling cluster credentials...")
         subprocess.call(f'gcloud config set project {project}', shell=True)
         subprocess.call(f'gcloud container clusters get-credentials {cluster} --zone {zone}', shell=True)
@@ -298,7 +298,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Inject defaults into program globals()
-    global DEFAULT 
+    global DEFAULT
     DEFAULT = DEFAULTS[args.project]
 
     # Make JOBLOG_DIR if it doesn't exist
@@ -310,11 +310,7 @@ if __name__ == '__main__':
         DEFAULT.DEFAULT_STARTUP_DIR = args.startup_dir
 
     # Change conda env if specified
-    if args.conda:
-        DEFAULT.CONDA_ENV = args.conda
-    else:
-        DEFAULT.CONDA_ENV = DEFAULT.DEFAULT_CONDA_ENV
-
+    DEFAULT.CONDA_ENV = args.conda or DEFAULT.DEFAULT_CONDA_ENV
     # Change image if specified
     if args.image:
         DEFAULT.DEFAULT_IMAGE = args.image

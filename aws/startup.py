@@ -107,11 +107,11 @@ def job_startup_commands(root_path, module_to_run, config_path, use_gdb):
     """
     cmds = [f'cd {root_path}'] + git_commands(pull=True) + install_commands(jupyter=False) + wandb_commands()
 
-    if not use_gdb:
-        # run_cmd = f'python {method_to_run}.py --config {config_path}'
-        run_cmd = f'python -m {module_to_run} --config {config_path}'
-    else:
-        run_cmd = f'gdb -ex -r -ex backtrace full --args python -m {module_to_run} --config {config_path}'
+    run_cmd = (
+        f'gdb -ex -r -ex backtrace full --args python -m {module_to_run} --config {config_path}'
+        if use_gdb
+        else f'python -m {module_to_run} --config {config_path}'
+    )
 
     cmds.append(run_cmd)
 
